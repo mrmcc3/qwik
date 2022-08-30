@@ -21,6 +21,7 @@ export async function buildQwikCity(config: BuildConfig) {
     buildServiceWorker(config, inputDir, outputDir),
     buildVite(config, inputDir, outputDir),
     buildCloudflarePages(config, inputDir, outputDir),
+    buildVercelEdge(config, inputDir, outputDir),
     buildExpress(config, inputDir, outputDir),
     buildNetlifyEdge(config, inputDir, outputDir),
     buildStaticNode(config, inputDir, outputDir),
@@ -42,6 +43,9 @@ export async function buildQwikCity(config: BuildConfig) {
       },
       './middleware/cloudflare-pages': {
         import: './middleware/cloudflare-pages/index.mjs',
+      },
+      './middleware/vercel-edge': {
+        import: './middleware/vercel-edge/index.mjs',
       },
       './middleware/express': {
         import: './middleware/express/index.mjs',
@@ -192,6 +196,23 @@ async function buildCloudflarePages(config: BuildConfig, inputDir: string, outpu
   await build({
     entryPoints,
     outfile: join(outputDir, 'middleware', 'cloudflare-pages', 'index.mjs'),
+    bundle: true,
+    platform: 'node',
+    target: nodeTarget,
+    format: 'esm',
+    watch: watcher(config),
+    external,
+  });
+}
+
+async function buildVercelEdge(config: BuildConfig, inputDir: string, outputDir: string) {
+  const entryPoints = [join(inputDir, 'middleware', 'vercel-edge', 'index.ts')];
+
+  const external = ['@qwik-city-plan'];
+
+  await build({
+    entryPoints,
+    outfile: join(outputDir, 'middleware', 'vercel-edge', 'index.mjs'),
     bundle: true,
     platform: 'node',
     target: nodeTarget,

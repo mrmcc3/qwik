@@ -15,6 +15,9 @@
     "./middleware/cloudflare-pages": {
       "import": "./lib/middleware/cloudflare-pages/index.mjs"
     },
+    "./middleware/vercel-edge": {
+      "import": "./lib/middleware/vercel-edge/index.mjs"
+    },
     "./middleware/express": {
       "import": "./lib/middleware/express/index.mjs",
       "require": "./lib/middleware/express/index.cjs"

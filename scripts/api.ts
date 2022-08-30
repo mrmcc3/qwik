@@ -71,6 +71,11 @@ export function apiExtractor(config: BuildConfig) {
   );
   createTypesApi(
     config,
+    join(config.packagesDir, 'qwik-city', 'middleware', 'vercel-edge'),
+    join(config.packagesDir, 'qwik-city', 'lib', 'middleware', 'vercel-edge', 'index.d.ts')
+  );
+  createTypesApi(
+    config,
     join(config.packagesDir, 'qwik-city', 'middleware', 'express'),
     join(config.packagesDir, 'qwik-city', 'lib', 'middleware', 'express', 'index.d.ts')
   );
